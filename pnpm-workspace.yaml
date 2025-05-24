@@ -1,0 +1,12 @@
+# https://pnpm.io/settings
+
+# Build Settings (https://pnpm.io/settings#build-settings)
+verifyDepsBeforeRun: install
+onlyBuiltDependencies:
+  - "@swc/core"
+  - "@tailwindcss/oxide"
+  - esbuild
+  - unrs-resolver
+
+# https://pnpm.io/cli/run#shellemulator
+shellEmulator: true

@@ -1,0 +1,19 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+    // Avoid using "source.organizeImports" since it conflicts with `eslint-plugin-import-x`
+  },
+  "eslint.useFlatConfig": true,
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "files.associations": {
+    "*.css": "tailwindcss" // @see {@link https://github.com/tailwindlabs/tailwindcss-intellisense#filesassociations}
+  },
+  "typescript.enablePromptUseWorkspaceTsdk": true, // Use the workspace TypeScript version (useful for Next.js)
+  "typescript.preferences.importModuleSpecifierEnding": "js", // Do not shorten path endings; include the `.js` or `.ts` extension
+  "typescript.tsdk": "./node_modules/typescript/lib",
+
+  // Language-Specific Configuration Overrides
+  "[graphql][handlebars][javascript][javascriptreact][json][jsonc][jsonl][markdown][typescript][typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
