@@ -1,14 +1,26 @@
 {
+  /* Visit https://code.visualstudio.com/docs/getstarted/settings to read more about this file */
+
+  // Text Editor
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
     // Avoid using "source.organizeImports" since it conflicts with `eslint-plugin-import-x`
   },
-  "eslint.useFlatConfig": true,
-  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "editor.quickSuggestions": {
+    "strings": "on" // @see {@link https://github.com/tailwindlabs/tailwindcss-intellisense#editorquicksuggestions}
+  },
+
+  // Files
   "files.associations": {
     "*.css": "tailwindcss" // @see {@link https://github.com/tailwindlabs/tailwindcss-intellisense#filesassociations}
   },
-  "typescript.enablePromptUseWorkspaceTsdk": true, // Use the workspace TypeScript version (useful for Next.js)
+
+  // ESLint
+  "eslint.useFlatConfig": true,
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+
+  // TypeScript
+  "typescript.enablePromptUseWorkspaceTsdk": true, // Use the workspace TypeScript version
   "typescript.preferences.importModuleSpecifierEnding": "js", // Do not shorten path endings; include the `.js` or `.ts` extension
   "typescript.tsdk": "./node_modules/typescript/lib",
 

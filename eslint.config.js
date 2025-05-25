@@ -22,7 +22,7 @@ export default defineConfig(
    * @see {@link https://github.com/eslint/eslint/blob/main/packages/js/src/configs/eslint-recommended.js#L11-L17}
    */
   { name: "@eslint/js/recommended", ...eslint.configs.recommended },
-  tseslint["configs"].recommended,
+  tseslint["configs"].recommendedTypeChecked,
   pluginImportX["flatConfigs"].recommended,
   pluginImportX["flatConfigs"].typescript,
   pluginPromise.configs["flat/recommended"],

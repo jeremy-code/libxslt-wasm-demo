@@ -5,7 +5,7 @@
  * @satisfies {Configuration}
  */
 const lintStagedConfig = {
-  "*.{js,ts}": ["pnpm run lint", "pnpm run format:check"],
+  "*.{js,jsx,ts,tsx}": ["pnpm run lint", "pnpm run format:check"],
   "*.{json,md,yaml,yml}": "pnpm run format",
 };
 
