@@ -33,7 +33,7 @@ export const Link = ({
     >
       <Slot.Slottable>{children}</Slot.Slottable>
       {isExternal && (
-        <ExternalLink className="size-[2ex] inline-block align-sub pl-0.5" />
+        <ExternalLink className="inline-block size-[2ex] pl-0.5 align-sub" />
       )}
     </Comp>
   );

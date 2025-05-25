@@ -13,6 +13,9 @@ const prettierConfig = {
   trailingComma: "all",
   objectWrap: "collapse",
   proseWrap: "never",
+  plugins: ["prettier-plugin-tailwindcss"],
+  tailwindStylesheet: "./src/globals.css",
+  tailwindFunctions: ["clsx", "cn", "cva", "twMerge"],
 };
 
 export default prettierConfig;

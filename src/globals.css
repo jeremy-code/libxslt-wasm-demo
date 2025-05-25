@@ -57,11 +57,11 @@
   }
 
   :where(h1, h2, h3, h4, h5, h6, dt, blockquote, figcaption) {
-    @apply text-balance max-w-[25ch];
+    @apply max-w-[25ch] text-balance;
   }
 
   :where(p, dd, li, figcaption) {
-    @apply text-pretty max-w-prose;
+    @apply max-w-prose text-pretty;
   }
 
   textarea:not([rows]) {
@@ -69,12 +69,12 @@
   }
 
   :where(td, math, time[datetime*=":"]) {
-    @apply tabular-nums lining-nums;
+    @apply lining-nums tabular-nums;
   }
 
   @media (prefers-reduced-motion: no-preference) {
     :has(:target) {
-      @apply scroll-smooth scroll-pt-12;
+      @apply scroll-pt-12 scroll-smooth;
     }
   }
 }

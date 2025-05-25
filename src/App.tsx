@@ -1,6 +1,10 @@
+import { Callout, CalloutText } from "#components/Callout.tsx";
 import { Link } from "#components/Link.tsx";
 
 const App = () => {
+  const isJspiEnabled =
+    typeof WebAssembly === "object" && "Suspending" in WebAssembly;
+
   return (
     <>
       <title>libxslt-wasm-demo</title>
@@ -12,7 +16,22 @@ const App = () => {
         </div>
       </header>
       <main className="container my-4">
-        <p className="my-4 mx-auto">
+        {!isJspiEnabled && (
+          <Callout variant="destructive">
+            <CalloutText>
+              JS Promise Integration (JSPI) is not enabled in this browser. See{" "}
+              <Link
+                className="text-blue-500"
+                href="https://webassembly.org/features/"
+                isExternal
+              >
+                webassembly.org/features
+              </Link>{" "}
+              for more information on browser compatibility.
+            </CalloutText>
+          </Callout>
+        )}
+        <p className="mx-auto my-4">
           {"This is a demo of "}
           <Link
             className="text-blue-500"
@@ -37,7 +56,7 @@ const App = () => {
           <p>
             {"Made with ❤️ by "}
             <Link
-              className="text-blue-500 font-bold"
+              className="font-bold text-blue-500"
               href="https://github.com/jeremy-code"
             >
               Jeremy
