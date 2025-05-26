@@ -21,6 +21,11 @@
   --color-foreground: light-dark(var(--color-gray-950), var(--color-gray-50));
   --color-background: light-dark(var(--color-white), var(--color-gray-950));
   --color-border: light-dark(var(--color-gray-300), var(--color-gray-800));
+  --color-muted: light-dark(var(--color-gray-200), var(--color-gray-800));
+  --color-muted-foreground: light-dark(
+    var(--color-gray-600),
+    var(--color-gray-400)
+  );
 }
 
 @layer base {

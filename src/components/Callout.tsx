@@ -5,7 +5,7 @@ import type { PrimitivePropsWithRef } from "radix-ui/internal";
 import { twMerge } from "tailwind-merge";
 
 const calloutVariants = cva(
-  "mx-auto flex max-w-3xl items-center gap-4 rounded p-4 shadow",
+  "mx-auto flex items-center gap-4 rounded p-4 shadow",
   {
     variants: {
       variant: {

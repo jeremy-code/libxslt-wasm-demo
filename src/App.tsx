@@ -1,5 +1,14 @@
+import { lazy, Suspense } from "react";
+
 import { Callout, CalloutText } from "#components/Callout.tsx";
 import { Link } from "#components/Link.tsx";
+import { Skeleton } from "#components/Skeleton.tsx";
+
+// Suspending the import of the Reader component, so `libxslt-wasm` does not
+// throw error when JSPI is not enabled in the browser
+const LazyReader = lazy(() =>
+  import("./Reader").then((mod) => ({ default: mod.Reader })),
+);
 
 const App = () => {
   const isJspiEnabled =
@@ -15,7 +24,7 @@ const App = () => {
           </Link>
         </div>
       </header>
-      <main className="container my-4">
+      <main className="container flex max-w-4xl flex-col items-center gap-4 py-4">
         {!isJspiEnabled && (
           <Callout variant="destructive">
             <CalloutText>
@@ -31,7 +40,7 @@ const App = () => {
             </CalloutText>
           </Callout>
         )}
-        <p className="mx-auto my-4">
+        <p className="my-4">
           {"This is a demo of "}
           <Link
             className="text-blue-500"
@@ -48,10 +57,30 @@ const App = () => {
           >
             libxslt
           </Link>
-          {` library.`}
+          {` library. Note that many URLs may not work as intended due to CORS
+          errors, as most XML documents either expect API requests to come from
+          either a server or the same origin. You can try `}
+          <Link
+            className="text-blue-500"
+            href="https://google.github.io/styleguide/vimscriptguide.xml"
+            isExternal
+          >
+            https://google.github.io/styleguide/vimscriptguide.xml
+          </Link>
+          {" to see the demo in action."}
         </p>
+        {isJspiEnabled ?
+          <Suspense fallback={<Skeleton className="h-[17.5rem] w-full" />}>
+            <LazyReader />
+          </Suspense>
+        : <div className="grid min-h-28 place-content-center rounded bg-muted p-4">
+            <p className="italic">
+              The demo is disabled since JSPI is not enabled.
+            </p>
+          </div>
+        }
       </main>
-      <footer className="grid place-content-center border-t">
+      <footer className="mt-4 grid place-content-center border-t">
         <div className="container py-4">
           <p>
             {"Made with ❤️ by "}
