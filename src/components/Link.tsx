@@ -2,7 +2,7 @@ import { ExternalLink } from "lucide-react";
 import { Slot } from "radix-ui";
 import type { PrimitivePropsWithRef } from "radix-ui/internal";
 
-import { cn } from "../utils/cn";
+import { cn } from "#utils/cn.ts";
 
 export type LinkProps = {
   /**

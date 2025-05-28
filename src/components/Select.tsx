@@ -16,8 +16,8 @@ const SelectTrigger = ({
 }: ComponentProps<typeof SelectPrimitive.Trigger>) => (
   <SelectPrimitive.Trigger
     className={cn(
-      "inline-flex h-9.5 items-center justify-center gap-1.5 rounded-sm border border-subtle bg-white px-4 text-sm/none leading-none shadow dark:bg-gray-800",
-      "hover:border-gray-400/70 dark:hover:border-gray-600",
+      "inline-flex h-9.5 items-center justify-center gap-1.5 rounded-sm border border-subtle bg-white px-4 text-sm/none shadow dark:bg-gray-800",
+      "hover:border-subtle-foreground",
       "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
       "data-[placeholder]:text-muted-foreground",
       className,

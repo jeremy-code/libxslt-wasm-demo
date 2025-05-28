@@ -7,8 +7,7 @@ import {
 
 import { useDropzone, type DropzoneOptions } from "react-dropzone";
 
-import { cn } from "../utils/cn";
-
+import { cn } from "#utils/cn.ts";
 import { formatBytes } from "#utils/formatBytes.ts";
 
 type DropzoneProps = {

@@ -35,7 +35,7 @@ const Callout = ({
     >
       <div className="w-8">
         <AccessibleIcon.Root label="Warning">
-          <TriangleAlert className="text-current" />
+          <TriangleAlert />
         </AccessibleIcon.Root>
       </div>
       <Slot.Slottable>{children}</Slot.Slottable>

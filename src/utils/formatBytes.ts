@@ -31,7 +31,7 @@ export const formatBytes = (
   const exponent =
     // 0 becomes -Infinity, nonfinite numbers cannot index `UNITS`
     bytes !== 0 && Number.isFinite(bytes) ?
-      // Set to max unit if exponent exceeds largest unit (i.e. petabyte)
+      // Set to max unit (petabyte) if exponent exceeds largest unit
       Math.min(Math.floor(Math.log10(bytes) / 3), UNITS.length - 1)
     : 0; // Defaults to unit "byte"
 

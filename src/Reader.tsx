@@ -16,10 +16,8 @@ import { cn, isEmptyFile, throwError } from "#utils/index.ts";
 const UrlInputOrDropzone = ({ name, ...props }: InputProps) => (
   <>
     <Input name={name} {...props} />
-    <div className="flex items-center gap-4">
-      <div className="h-px grow bg-muted" />
-      <span className="text-muted-foreground">OR</span>
-      <div className="h-px grow bg-muted" />
+    <div className="flex items-center gap-4 text-muted-foreground before:h-px before:grow before:bg-muted after:h-px after:grow after:bg-muted">
+      OR
     </div>
     <Dropzone
       name={name}
@@ -123,9 +121,9 @@ const Reader = () => {
       </form>
       <div
         className={cn(
-          "rounded-md bg-muted wrap-break-word whitespace-pre-line text-muted-foreground transition-colors",
+          "rounded-md bg-subtle wrap-break-word whitespace-pre-line text-foreground transition-colors",
           {
-            "border border-red-400 bg-red-200 text-gray-950 dark:border-red-500 dark:bg-red-900 dark:text-white":
+            "border border-red-400 bg-red-200 dark:border-red-500 dark:bg-red-900":
               !!state?.error,
           },
         )}

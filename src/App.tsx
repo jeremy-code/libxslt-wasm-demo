@@ -4,7 +4,7 @@ import { Callout, CalloutText } from "#components/Callout.tsx";
 import { Link } from "#components/Link.tsx";
 import { Skeleton } from "#components/Skeleton.tsx";
 
-// Suspending the import of the Reader component, so `libxslt-wasm` does not
+// Deferring the import of the Reader component, so `libxslt-wasm` does not
 // throw error when JSPI is not enabled in the browser
 const LazyReader = lazy(() =>
   import("./Reader").then((mod) => ({ default: mod.Reader })),
@@ -28,15 +28,17 @@ const App = () => {
         {!isJspiEnabled && (
           <Callout variant="destructive">
             <CalloutText>
-              JS Promise Integration (JSPI) is not enabled in this browser. See{" "}
+              {
+                "JS Promise Integration (JSPI) is not enabled in this browser. See "
+              }
               <Link
                 className="text-blue-500"
                 href="https://webassembly.org/features/"
                 isExternal
               >
                 webassembly.org/features
-              </Link>{" "}
-              for more information on browser compatibility.
+              </Link>
+              {" for more information on browser compatibility."}
             </CalloutText>
           </Callout>
         )}

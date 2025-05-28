@@ -10,7 +10,7 @@ const Separator = ({
 }: ComponentPropsWithRef<typeof SeparatorPrimitive.Root>) => (
   <SeparatorPrimitive.Root
     className={cn(
-      "bg-border data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px",
+      "bg-muted data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px",
       className,
     )}
     {...props}

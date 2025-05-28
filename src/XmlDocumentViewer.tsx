@@ -41,6 +41,7 @@ const XmlDocumentViewer = ({ xmlDocument }: { xmlDocument: XmlDocument }) => {
           <h1 className="font-semibold text-foreground">Result</h1>
         </div>
 
+        {/* Mobile */}
         <Select value={format} onValueChange={onFormatChange}>
           <SelectTrigger className="sm:hidden">
             <SelectValue />
@@ -54,6 +55,7 @@ const XmlDocumentViewer = ({ xmlDocument }: { xmlDocument: XmlDocument }) => {
           </SelectContent>
         </Select>
 
+        {/* Desktop */}
         <ToggleGroup
           className="not-sm:hidden"
           type="single"
@@ -67,7 +69,7 @@ const XmlDocumentViewer = ({ xmlDocument }: { xmlDocument: XmlDocument }) => {
           ))}
         </ToggleGroup>
       </div>
-      <Separator className="bg-subtle" />
+      <Separator />
       <div className="p-6">
         {format === "xmlString" ?
           xmlDocument.toString()

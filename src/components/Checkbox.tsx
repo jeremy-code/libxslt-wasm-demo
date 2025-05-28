@@ -3,7 +3,7 @@ import type { ComponentPropsWithRef } from "react";
 import { Check, Minus } from "lucide-react";
 import { Checkbox as CheckboxPrimitive } from "radix-ui";
 
-import { cn } from "../utils/cn";
+import { cn } from "#utils/cn.ts";
 
 export const Checkbox = ({
   className,
@@ -12,7 +12,8 @@ export const Checkbox = ({
   <CheckboxPrimitive.Root
     className={cn(
       "flex size-4 appearance-none items-center justify-center rounded",
-      "border border-gray-400 bg-transparent hover:bg-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800",
+      "border border-muted bg-input hover:border-subtle-foreground",
+      "data-[state=checked]:border-accent data-[state=checked]:bg-accent data-[state=checked]:text-background data-[state=checked]:hover:border-accent-hover data-[state=checked]:hover:bg-accent-hover",
       className,
     )}
     {...props}
