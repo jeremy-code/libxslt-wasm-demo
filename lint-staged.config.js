@@ -6,7 +6,7 @@
  */
 const lintStagedConfig = {
   "*.{js,jsx,ts,tsx}": ["pnpm run lint", "pnpm run format:check"],
-  "*.{json,md,yaml,yml}": "pnpm run format",
+  "*.{json,jsonc,md,yaml,yml}": "pnpm run format:check",
 };
 
 export default lintStagedConfig;

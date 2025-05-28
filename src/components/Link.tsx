@@ -23,7 +23,7 @@ export const Link = ({
   return (
     <Comp
       className={cn(
-        "transition-colors [transition-behavior:allow-discrete]",
+        "transition-colors transition-discrete",
         "decoration-current/75 decoration-from-font underline-offset-1 hover:underline",
         className,
       )}
