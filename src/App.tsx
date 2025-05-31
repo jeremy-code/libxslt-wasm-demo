@@ -1,5 +1,7 @@
 import { lazy, Suspense } from "react";
 
+import semverMinVersion from "semver/ranges/min-version";
+
 import { Callout, CalloutText } from "#components/Callout.tsx";
 import { Link } from "#components/Link.tsx";
 import { Skeleton } from "#components/Skeleton.tsx";
@@ -19,7 +21,14 @@ const App = () => {
       <title>libxslt-wasm-demo</title>
       <header className="border-b">
         <div className="container flex items-center justify-center py-4">
-          <Link className="font-semibold hover:no-underline" href="/">
+          <Link
+            className="flex items-center gap-2 font-semibold hover:no-underline"
+            href="/"
+          >
+            <svg className="size-[1em]">
+              {/* https://caniuse.com/mdn-svg_elements_use_omit_external_fragment */}
+              <use href="/favicon.svg#favicon" />
+            </svg>
             libxslt-wasm-demo
           </Link>
         </div>
@@ -51,7 +60,7 @@ const App = () => {
           >
             libxslt-wasm
           </Link>
-          {` (v. ${__LIBXSLT_WASM_VERSION__}), a WebAssembly port of the `}
+          {` (v. ${semverMinVersion(__LIBXSLT_WASM_VERSION__)?.toString() ?? "0.0.0"}), a WebAssembly port of the `}
           <Link
             className="text-blue-500"
             href="https://gitlab.gnome.org/GNOME/libxslt"

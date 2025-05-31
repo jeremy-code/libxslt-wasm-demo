@@ -16,8 +16,9 @@ const SelectTrigger = ({
 }: ComponentProps<typeof SelectPrimitive.Trigger>) => (
   <SelectPrimitive.Trigger
     className={cn(
-      "inline-flex h-9.5 items-center justify-center gap-1.5 rounded-sm border border-subtle bg-white px-4 text-sm/none shadow dark:bg-gray-800",
-      "hover:border-subtle-foreground",
+      "inline-flex h-9.5 items-center justify-center gap-1.5 rounded border border-subtle bg-white px-4 text-sm/none dark:bg-gray-800",
+      "border-gray-300 shadow-xs dark:border-gray-700/50",
+      "hover:border-subtle-foreground/70",
       "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
       "data-[placeholder]:text-muted-foreground",
       className,
@@ -42,7 +43,8 @@ const SelectContent = ({
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
       className={cn(
-        "overflow-hidden rounded-md border border-subtle bg-white dark:bg-gray-800",
+        "overflow-hidden rounded-md border bg-white dark:bg-gray-800",
+        "border-gray-300 shadow-xs dark:border-gray-700/50",
         className,
       )}
       {...props}
