@@ -1,5 +1,6 @@
 import eslint from "@eslint/js";
 import eslintReact from "@eslint-react/eslint-plugin";
+import vitest from "@vitest/eslint-plugin";
 import { defineConfig, globalIgnores } from "eslint/config";
 import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript";
 import pluginImportX, { createNodeResolver } from "eslint-plugin-import-x";
@@ -55,12 +56,9 @@ export default defineConfig(
         "error",
         {
           groups: ["builtin", "external", ["parent", "sibling", "index"]],
-          pathGroups: [
-            { pattern: "#*", group: "internal" },
-            { pattern: "react{,-dom{,/*}}", group: "builtin" },
-          ],
+          pathGroups: [{ pattern: "react{,-dom}{,/*}", group: "builtin" }],
+          pathGroupsExcludedImportTypes: ["builtin", "object"],
           distinctGroup: false,
-          pathGroupsExcludedImportTypes: ["object"],
           "newlines-between": "always",
           alphabetize: { order: "asc" },
         },
@@ -70,14 +68,16 @@ export default defineConfig(
       /**
        * @see {@link https://github.com/un-ts/eslint-plugin-import-x/tree/master/resolvers}
        */
-      "import/resolver-next": [
+      "import-x/resolver-next": [
         createTypeScriptImportResolver(),
         createNodeResolver(),
       ],
-      tailwindcss: {
-        callees: ["classnames", "clsx", "cn", "ctl", "cva", "twMerge"],
-      },
     },
+  },
+  {
+    // https://vitest.dev/config/#include
+    files: ["**/*.{test,spec}.?(c|m)[jt]s?(x)"],
+    ...vitest.configs.recommended,
   },
   {
     files: ["**/*.js", "**/*.mjs", "**/*.cjs"],
