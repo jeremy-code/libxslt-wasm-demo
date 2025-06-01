@@ -1,17 +1,17 @@
-import { useActionState, useEffect, useState } from "react";
-
-import { XmlDocument, XsltStylesheet } from "libxslt-wasm";
+import { useEffect, useState } from "react";
 
 import { XmlDocumentViewer } from "#XmlDocumentViewer.tsx";
 import {
-  Button,
   Checkbox,
   Dropzone,
   Input,
   type InputProps,
   Label,
+  LoadingButton,
 } from "#components/index.ts";
-import { cn, isEmptyFile, throwError } from "#utils/index.ts";
+import { useXmlDocumentStore } from "#hooks/useXmlDocumentStore.tsx";
+import { applyFormStylesheet } from "#utils/applyFormStylesheet.ts";
+import { cn } from "#utils/cn.ts";
 
 const UrlInputOrDropzone = ({ name, ...props }: InputProps) => (
   <>
@@ -27,74 +27,39 @@ const UrlInputOrDropzone = ({ name, ...props }: InputProps) => (
   </>
 );
 
-type TransformStylesheetFormState = {
-  data?: XmlDocument;
-  error?: Error;
-} | null;
-
-const transformStylesheet = async (
-  _: TransformStylesheetFormState,
-  formData: FormData,
-): Promise<TransformStylesheetFormState> => {
-  try {
-    const [xmlDocumentSource, xsltStylesheetSource] = [
-      "xmlDocument",
-      "xsltStylesheet",
-    ].map((name) =>
-      formData
-        .getAll(name)
-        .filter((item) => item !== "" && !isEmptyFile(item))
-        .at(0),
-    );
-    const useEmbeddedStylesheet = formData.get("useEmbeddedStylesheet");
-
-    const xmlDocument =
-      xmlDocumentSource instanceof File ?
-        await XmlDocument.from(await xmlDocumentSource.bytes())
-      : typeof xmlDocumentSource === "string" ?
-        await XmlDocument.fromUrl(xmlDocumentSource)
-      : throwError("XML document is required");
-    if (xmlDocument === null) {
-      throw new Error("Invalid XML document");
-    }
-    const xsltStylesheet =
-      useEmbeddedStylesheet === "on" ?
-        await XsltStylesheet.fromEmbeddedXmlDocument(xmlDocument)
-      : xsltStylesheetSource instanceof File ?
-        await XsltStylesheet.from(await xsltStylesheetSource.bytes())
-      : typeof xsltStylesheetSource === "string" ?
-        await XsltStylesheet.fromUrl(xsltStylesheetSource)
-      : throwError("XSLT stylesheet is required");
-    if (xsltStylesheet === null) {
-      throw new Error("Invalid XSLT stylesheet");
-    }
-    const result = await xsltStylesheet.apply(xmlDocument);
-    xsltStylesheet.delete();
-    xmlDocument.delete();
-    return { data: result, error: undefined };
-  } catch (error) {
-    if (error instanceof Error) {
-      return { error };
-    }
-  }
-  return null;
-};
-
 const Reader = () => {
-  const [state, formAction] = useActionState(transformStylesheet, null);
   const [useEmbeddedStylesheet, setUseEmbeddedStylesheet] = useState(true);
+  const isXmlDocumentNull = useXmlDocumentStore(
+    (state) => state.xmlDocument === null,
+  );
+  const setXmlDocument = useXmlDocumentStore((state) => state.setXmlDocument);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    // Cleanup function to delete the XML document when the component unmounts
     return () => {
-      if (state?.data) {
-        state.data.delete();
-      }
+      useXmlDocumentStore.getState().xmlDocument?.delete();
+      useXmlDocumentStore.setState((prev) => ({ ...prev, xmlDocument: null }));
     };
-  }, [state?.data]);
+  }, []);
 
   return (
     <div className="flex w-full flex-col gap-6">
-      <form action={formAction} className="flex flex-col gap-4">
+      <form
+        action={async (formData: FormData) => {
+          try {
+            const document = await applyFormStylesheet(formData);
+            setXmlDocument(document);
+            setError(null);
+          } catch (error) {
+            if (error instanceof Error) {
+              setXmlDocument(null);
+              setError(error);
+            }
+          }
+        }}
+        className="flex flex-col gap-4"
+      >
         <Label>XML Document</Label>
         <UrlInputOrDropzone
           name="xmlDocument"
@@ -115,28 +80,26 @@ const Reader = () => {
             placeholder="https://example.com/stylesheet.xsl"
           />
         )}
-        <Button className="w-fit" type="submit">
+        <LoadingButton className="w-fit" type="submit">
           Apply Transformation
-        </Button>
+        </LoadingButton>
       </form>
       <div
         className={cn(
           "rounded-md bg-subtle wrap-break-word whitespace-pre-line text-foreground transition-colors",
           {
             "border border-red-400 bg-red-200 dark:border-red-500 dark:bg-red-900":
-              !!state?.error,
+              !!error,
           },
         )}
       >
-        {state?.data instanceof XmlDocument ?
-          <XmlDocumentViewer xmlDocument={state.data} />
-        : state?.error !== undefined ?
+        {!isXmlDocumentNull ?
+          <XmlDocumentViewer />
+        : error !== null ?
           <p className="p-6 font-mono">
-            {`An error occurred while transforming the XML document: ${state.error.message}`}
+            {`An error occurred while transforming the XML document: ${error.message}`}
           </p>
-        : state === null ?
-          <p className="p-6 font-mono italic">Output will be displayed here</p>
-        : null}
+        : <p className="p-6 font-mono italic">Output will be displayed here</p>}
       </div>
     </div>
   );

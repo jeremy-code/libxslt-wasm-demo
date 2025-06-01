@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { memo, Suspense } from "react";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 
 import { toJsxRuntime, type Options } from "hast-util-to-jsx-runtime";
@@ -11,7 +11,10 @@ const toJsxRuntimeOptions = { Fragment, jsx, jsxs } satisfies Options;
 
 type CodeBlockItemProps = { value: string; scope: Scope };
 
-const CodeBlockItemHelper = ({ value, scope }: CodeBlockItemProps) => {
+const CodeBlockItemHelper = memo(function CodeBlockItemHelper({
+  value,
+  scope,
+}: CodeBlockItemProps) {
   const starryNight = useStarryNight();
 
   return (
@@ -19,7 +22,7 @@ const CodeBlockItemHelper = ({ value, scope }: CodeBlockItemProps) => {
       {toJsxRuntime(starryNight.highlight(value, scope), toJsxRuntimeOptions)}
     </>
   );
-};
+});
 
 const CodeBlockItem = ({ value, scope }: CodeBlockItemProps) => {
   return (

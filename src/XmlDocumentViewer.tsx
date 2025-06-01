@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
-import type { XmlDocument } from "libxslt-wasm";
 import { FileOutput } from "lucide-react";
 import { AccessibleIcon } from "radix-ui";
 
@@ -14,6 +13,7 @@ import {
 } from "#components/Select.tsx";
 import { Separator } from "#components/Separator.tsx";
 import { ToggleGroup, ToggleGroupItem } from "#components/ToggleGroup.tsx";
+import { useXmlDocumentStore } from "#hooks/useXmlDocumentStore.tsx";
 import type { IterableElement } from "#interfaces.ts";
 
 const xmlDocumentFormats = [
@@ -26,17 +26,21 @@ type XmlDocumentFormat = IterableElement<typeof xmlDocumentFormats>["value"];
 const isXmlDocumentFormat = (value: string): value is XmlDocumentFormat =>
   xmlDocumentFormats.map<string>((format) => format.value).includes(value);
 
-type XmlDocumentViewerProps = { xmlDocument: XmlDocument };
-
-const XmlDocumentViewer = ({ xmlDocument }: XmlDocumentViewerProps) => {
+const XmlDocumentViewer = () => {
+  const xmlDocumentString = useXmlDocumentStore((state) =>
+    state.xmlDocument?.toString(),
+  );
+  const xmlDocumentHtmlString = useXmlDocumentStore((state) =>
+    state.xmlDocument?.toHtmlString(),
+  );
   const [format, setFormat] = useState<XmlDocumentFormat>("xmlString");
 
-  const onFormatChange = (value: string) => {
+  const onFormatChange = useCallback((value: string) => {
     // Guarantees value is not empty
     if (isXmlDocumentFormat(value)) {
       setFormat(value);
     }
-  };
+  }, []);
 
   return (
     <>
@@ -81,16 +85,16 @@ const XmlDocumentViewer = ({ xmlDocument }: XmlDocumentViewerProps) => {
         // 5.25rem = height of header + py-4 to match container margin
         className="max-h-[calc(100dvh-7.25rem)] overflow-y-auto p-6"
       >
-        {format === "xmlString" ?
-          <CodeBlockItem value={xmlDocument.toString()} scope="text.xml" />
-        : format === "htmlString" ?
-          <CodeBlockItem value={xmlDocument.toHtmlString()} scope="text.xml" />
-        : format === "html" ?
+        {format === "xmlString" && xmlDocumentString !== undefined ?
+          <CodeBlockItem value={xmlDocumentString} scope="text.xml" />
+        : format === "htmlString" && xmlDocumentHtmlString !== undefined ?
+          <CodeBlockItem value={xmlDocumentHtmlString} scope="text.xml" />
+        : format === "html" && xmlDocumentHtmlString !== undefined ?
           <iframe
             className="h-200 w-full rounded-md border border-subtle bg-white"
             height="800" // 50rem = 800px, calc(var(--spacing) * 200)
             sandbox="allow-scripts"
-            srcDoc={xmlDocument.toHtmlString()}
+            srcDoc={xmlDocumentHtmlString}
             title="XML Document Viewer"
           />
         : null}

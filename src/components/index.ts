@@ -5,6 +5,7 @@ export * from "./Dropzone.tsx";
 export * from "./Input.tsx";
 export * from "./Label.tsx";
 export * from "./Link.tsx";
+export * from "./LoadingButton.tsx";
 export * from "./Select.tsx";
 export * from "./Separator.tsx";
 export * from "./Skeleton.tsx";

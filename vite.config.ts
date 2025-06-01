@@ -11,8 +11,12 @@ export default defineConfig({
     __LIBXSLT_WASM_VERSION__: JSON.stringify(dependencies["libxslt-wasm"]),
   },
   plugins: [react(), tailwindcss()],
+  css: { transformer: "lightningcss" },
   esbuild: { supported: { "top-level-await": true } },
   worker: { format: "es" },
   optimizeDeps: { exclude: ["libxslt-wasm"] },
-  build: { target: ["es2022", "edge89", "firefox89", "chrome89", "safari15"] },
+  build: {
+    target: ["es2022", "edge89", "firefox89", "chrome89", "safari15"],
+    cssMinify: "lightningcss",
+  },
 });
