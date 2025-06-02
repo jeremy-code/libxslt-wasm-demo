@@ -6,6 +6,7 @@ onlyBuiltDependencies:
   - "@swc/core"
   - "@tailwindcss/oxide"
   - esbuild
+  - lefthook
   - unrs-resolver
 
 # https://pnpm.io/cli/run#shellemulator
