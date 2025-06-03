@@ -14,6 +14,9 @@ const prettierConfig = {
   objectWrap: "collapse",
   proseWrap: "never",
   plugins: ["prettier-plugin-tailwindcss"],
+  /**
+   * @see {@link https://github.com/tailwindlabs/prettier-plugin-tailwindcss#options}
+   */
   tailwindStylesheet: "./src/globals.css",
   tailwindFunctions: ["clsx", "cn", "cva", "twMerge"],
 };

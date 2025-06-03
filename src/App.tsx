@@ -9,7 +9,7 @@ import { Skeleton } from "#components/Skeleton.tsx";
 // Deferring the import of the Reader component, so `libxslt-wasm` does not
 // throw error when JSPI is not enabled in the browser
 const LazyReader = lazy(() =>
-  import("./Reader").then((mod) => ({ default: mod.Reader })),
+  import("./Reader.tsx").then((mod) => ({ default: mod.Reader })),
 );
 
 const App = () => {

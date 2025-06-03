@@ -1,19 +1,14 @@
 import type { XmlDocument } from "libxslt-wasm";
 import { create } from "zustand";
 
+import type { Nullable } from "#interfaces.ts";
+
 const useXmlDocumentStore = create<{
-  xmlDocument: XmlDocument | null;
-  setXmlDocument: (xmlDocument: XmlDocument | null) => void;
+  xmlDocument: Nullable<XmlDocument>;
+  setXmlDocument: (xmlDocument: Nullable<XmlDocument>) => void;
 }>()((set) => ({
   xmlDocument: null,
-  setXmlDocument: (xmlDocument) => {
-    set((prev) => {
-      if (prev.xmlDocument !== null) {
-        prev.xmlDocument.delete();
-      }
-      return { ...prev, xmlDocument };
-    });
-  },
+  setXmlDocument: (xmlDocument) => set((prev) => ({ ...prev, xmlDocument })),
 }));
 
 export { useXmlDocumentStore };

@@ -3,4 +3,6 @@ type IterableElement<T> =
   : T extends AsyncIterable<infer U> ? U
   : never;
 
-export type { IterableElement };
+type Nullable<T> = T | null | undefined;
+
+export type { IterableElement, Nullable };

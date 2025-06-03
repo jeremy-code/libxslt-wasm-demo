@@ -32,7 +32,6 @@
     var(--color-gray-400),
     var(--color-gray-600)
   );
-
   --color-accent: light-dark(var(--color-gray-950), var(--color-gray-100));
   --color-accent-hover: light-dark(
     var(--color-gray-700),

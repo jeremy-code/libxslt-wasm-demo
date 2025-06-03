@@ -19,10 +19,17 @@
   "eslint.useFlatConfig": true,
   "eslint.workingDirectories": [{ "mode": "auto" }],
 
+  // Tailwind CSS
+  "tailwindCSS.classFunctions": ["clsx", "cn", "cva", "twMerge"],
+  "tailwindCSS.experimental.configFile": "src/globals.css",
+
   // TypeScript
   "typescript.enablePromptUseWorkspaceTsdk": true, // Use the workspace TypeScript version
   "typescript.preferences.importModuleSpecifierEnding": "js", // Do not shorten path endings; include the `.js` or `.ts` extension
   "typescript.tsdk": "./node_modules/typescript/lib",
+
+  // Vitest
+  "vitest.rootConfig": "vite.config.ts",
 
   // Language-Specific Configuration Overrides
   "[graphql][handlebars][javascript][javascriptreact][json][jsonc][jsonl][markdown][typescript][typescriptreact]": {

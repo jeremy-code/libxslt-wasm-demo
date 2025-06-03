@@ -7,12 +7,14 @@ import { dependencies } from "./package.json";
 
 // https://vite.dev/config/
 export default defineConfig({
-  define: {
-    __LIBXSLT_WASM_VERSION__: JSON.stringify(dependencies["libxslt-wasm"]),
-  },
+  define: { __LIBXSLT_WASM_VERSION__: `"${dependencies["libxslt-wasm"]}"` },
   plugins: [react(), tailwindcss()],
   css: { transformer: "lightningcss" },
-  esbuild: { supported: { "top-level-await": true } },
+  esbuild: {
+    supported: {
+      "top-level-await": true, // https://emscripten.org/docs/tools_reference/settings_reference.html#modularize
+    },
+  },
   worker: { format: "es" },
   optimizeDeps: { exclude: ["libxslt-wasm"] },
   build: {

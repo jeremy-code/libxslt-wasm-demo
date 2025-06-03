@@ -24,7 +24,7 @@ const xmlDocumentFormats = [
 type XmlDocumentFormat = IterableElement<typeof xmlDocumentFormats>["value"];
 
 const isXmlDocumentFormat = (value: string): value is XmlDocumentFormat =>
-  xmlDocumentFormats.map<string>((format) => format.value).includes(value);
+  xmlDocumentFormats.some((format) => format.value === value);
 
 const XmlDocumentViewer = () => {
   const xmlDocumentString = useXmlDocumentStore((state) =>
@@ -49,7 +49,7 @@ const XmlDocumentViewer = () => {
           <AccessibleIcon.Root label="File output icon">
             <FileOutput size="18" />
           </AccessibleIcon.Root>
-          <h1 className="font-semibold text-foreground">Result</h1>
+          <h1 className="font-semibold">Result</h1>
         </div>
 
         {/* Mobile */}
@@ -88,7 +88,10 @@ const XmlDocumentViewer = () => {
         {format === "xmlString" && xmlDocumentString !== undefined ?
           <CodeBlockItem value={xmlDocumentString} scope="text.xml" />
         : format === "htmlString" && xmlDocumentHtmlString !== undefined ?
-          <CodeBlockItem value={xmlDocumentHtmlString} scope="text.xml" />
+          <CodeBlockItem
+            value={xmlDocumentHtmlString}
+            scope="text.html.basic"
+          />
         : format === "html" && xmlDocumentHtmlString !== undefined ?
           <iframe
             className="h-200 w-full rounded-md border border-subtle bg-white"

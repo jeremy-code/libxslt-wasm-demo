@@ -1,52 +1,37 @@
 import { XmlDocument, XsltStylesheet } from "libxslt-wasm";
 
-import { isEmptyFile } from "./isEmptyFile.ts";
-
-const getValidFormItem = (
-  formData: FormData,
-  name: string,
-): FormDataEntryValue | null => {
-  return (
-    formData
-      .getAll(name)
-      .filter((item) => item !== "" && !isEmptyFile(item))
-      .at(0) ?? null
-  );
-};
-
-const fromSource = <T>(
-  source: FormDataEntryValue | null,
-  classDefinition: {
-    from: (data: Uint8Array) => Promise<T>;
-    fromUrl: (url: string) => Promise<T>;
-  },
-  errorMessage?: string,
-): Promise<T> => {
-  if (source instanceof File) {
-    return source.bytes().then((bytes) => classDefinition.from(bytes));
-  } else if (typeof source === "string") {
-    return classDefinition.fromUrl(source);
-  }
-  throw new Error(errorMessage ?? "Invalid source");
-};
+import { fromSource } from "./fromSource.ts";
+import { isEmptyFormDataEntry } from "./isEmptyFormDataEntry.ts";
 
 const applyFormStylesheet = async (formData: FormData) => {
-  const xmlDocumentSource = getValidFormItem(formData, "xmlDocument");
-  const xsltStylesheetSource = getValidFormItem(formData, "xsltStylesheet");
+  const xmlDocumentSource = formData
+    .getAll("xmlDocument")
+    .find((value) => !isEmptyFormDataEntry(value));
+  const xsltStylesheetSource = formData
+    .getAll("xsltStylesheet")
+    .find((value) => !isEmptyFormDataEntry(value));
 
-  const xmlDocument = await fromSource(
+  const xmlDocumentPromise = fromSource(
     xmlDocumentSource,
     XmlDocument,
     "XML document is required",
   );
 
-  const xsltStylesheet = await (formData.get("useEmbeddedStylesheet") === "on" ?
-    XsltStylesheet.fromEmbeddedXmlDocument(xmlDocument)
-  : fromSource(
-      xsltStylesheetSource,
-      XsltStylesheet,
-      "XSLT stylesheet is required",
-    ));
+  const xsltStylesheetPromise =
+    formData.get("useEmbeddedStylesheet") === "on" ?
+      xmlDocumentPromise.then((xmlDocument) =>
+        XsltStylesheet.fromEmbeddedXmlDocument(xmlDocument),
+      )
+    : fromSource(
+        xsltStylesheetSource,
+        XsltStylesheet,
+        "XSLT stylesheet is required",
+      );
+
+  const [xmlDocument, xsltStylesheet] = await Promise.all([
+    xmlDocumentPromise,
+    xsltStylesheetPromise,
+  ]);
 
   if (xsltStylesheet === null) {
     throw new Error(

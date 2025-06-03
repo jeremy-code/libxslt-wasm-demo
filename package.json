@@ -8,6 +8,7 @@
   },
   "scripts": {
     "prepare": "lefthook install",
+    "typecheck": "tsc --noEmit",
     "dev": "vite",
     "build": "tsc --build && vite build",
     "lint": "eslint",
@@ -15,7 +16,8 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "vitest"
+    "test": "vitest --run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.8",

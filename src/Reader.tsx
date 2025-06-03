@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { XmlDocumentViewer } from "#XmlDocumentViewer.tsx";
-import {
-  Checkbox,
-  Dropzone,
-  Input,
-  type InputProps,
-  Label,
-  LoadingButton,
-} from "#components/index.ts";
+import { Checkbox } from "#components/Checkbox.tsx";
+import { Dropzone } from "#components/Dropzone.tsx";
+import { Input, type InputProps } from "#components/Input.tsx";
+import { Label } from "#components/Label.tsx";
+import { LoadingButton } from "#components/LoadingButton.tsx";
 import { useXmlDocumentStore } from "#hooks/useXmlDocumentStore.tsx";
 import { applyFormStylesheet } from "#utils/applyFormStylesheet.ts";
+import { assertIsError } from "#utils/assertIsError.ts";
 import { cn } from "#utils/cn.ts";
 
 const UrlInputOrDropzone = ({ name, ...props }: InputProps) => (
@@ -36,30 +34,35 @@ const Reader = () => {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    // Cleanup function to delete the XML document when the component unmounts
+    const unsubscribeXmlDocumentStore = useXmlDocumentStore.subscribe(
+      (_, prevState) => {
+        prevState.xmlDocument?.delete();
+      },
+    );
+
     return () => {
-      useXmlDocumentStore.getState().xmlDocument?.delete();
-      useXmlDocumentStore.setState((prev) => ({ ...prev, xmlDocument: null }));
+      unsubscribeXmlDocumentStore();
     };
   }, []);
 
+  const readerFormAction = useCallback(
+    async (formData: FormData) => {
+      try {
+        const document = await applyFormStylesheet(formData);
+        setXmlDocument(document);
+        setError(null);
+      } catch (error) {
+        assertIsError(error);
+        setXmlDocument(null);
+        setError(error);
+      }
+    },
+    [setXmlDocument],
+  );
+
   return (
     <div className="flex w-full flex-col gap-6">
-      <form
-        action={async (formData: FormData) => {
-          try {
-            const document = await applyFormStylesheet(formData);
-            setXmlDocument(document);
-            setError(null);
-          } catch (error) {
-            if (error instanceof Error) {
-              setXmlDocument(null);
-              setError(error);
-            }
-          }
-        }}
-        className="flex flex-col gap-4"
-      >
+      <form action={readerFormAction} className="flex flex-col gap-4">
         <Label>XML Document</Label>
         <UrlInputOrDropzone
           name="xmlDocument"
@@ -97,7 +100,7 @@ const Reader = () => {
           <XmlDocumentViewer />
         : error !== null ?
           <p className="p-6 font-mono">
-            {`An error occurred while transforming the XML document: ${error.message}`}
+            {`An error (${error.name}) occurred while transforming the XML document: ${error.message}`}
           </p>
         : <p className="p-6 font-mono italic">Output will be displayed here</p>}
       </div>
