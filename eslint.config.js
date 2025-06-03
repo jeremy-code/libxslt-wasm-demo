@@ -1,9 +1,12 @@
+import { defineConfig, globalIgnores } from "@eslint/config-helpers";
 import eslint from "@eslint/js";
+import comments from "@eslint-community/eslint-plugin-eslint-comments/configs";
 import eslintReact from "@eslint-react/eslint-plugin";
 import vitest from "@vitest/eslint-plugin";
-import { defineConfig, globalIgnores } from "eslint/config";
 import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript";
+import pluginESx from "eslint-plugin-es-x";
 import pluginImportX, { createNodeResolver } from "eslint-plugin-import-x";
+import nodePlugin from "eslint-plugin-n";
 import pluginPromise from "eslint-plugin-promise";
 import * as reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
@@ -26,11 +29,15 @@ export default defineConfig(
   tseslint["configs"].recommendedTypeChecked,
   pluginImportX["flatConfigs"].recommended,
   pluginImportX["flatConfigs"].typescript,
+  nodePlugin.configs["flat/recommended-module"],
+  comments.recommended,
+  pluginESx.configs["flat/restrict-to-es2022"],
   pluginPromise.configs["flat/recommended"],
   reactHooks.configs["recommended-latest"],
   reactRefresh.configs.vite,
   eslintReact.configs["recommended-type-checked"],
   {
+    linterOptions: { reportUnusedDisableDirectives: true },
     languageOptions: {
       ecmaVersion: 2022,
       globals: globals.browser,
@@ -45,6 +52,18 @@ export default defineConfig(
       },
     },
     rules: {
+      /**
+       * @see {@link https://eslint.org/docs/latest/rules/prefer-exponentiation-operator}
+       */
+      "prefer-exponentiation-operator": "error",
+      /**
+       * @see {@link https://eslint.org/docs/latest/rules/yoda}
+       */
+      yoda: ["error", "never"],
+      "@typescript-eslint/no-unnecessary-condition": [
+        "error",
+        { allowConstantLoopConditions: "only-allowed-literals" },
+      ],
       /**
        * @see {@link https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/newline-after-import.md}
        */
@@ -72,6 +91,7 @@ export default defineConfig(
         createTypeScriptImportResolver(),
         createNodeResolver(),
       ],
+      node: { version: ">=21.2.0" },
     },
   },
   {
