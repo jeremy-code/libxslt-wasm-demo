@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react";
 import semverMinVersion from "semver/ranges/min-version";
 
 import { Callout, CalloutText } from "#components/Callout.tsx";
+import { Layout } from "#components/Layout.tsx";
 import { Link } from "#components/Link.tsx";
 import { Skeleton } from "#components/Skeleton.tsx";
 
@@ -19,91 +20,66 @@ const App = () => {
   return (
     <>
       <title>libxslt-wasm-demo</title>
-      <header className="border-b">
-        <div className="container flex items-center justify-center py-4">
-          <Link
-            className="flex items-center gap-2 font-semibold hover:no-underline"
-            href="/"
-          >
-            <svg className="size-[1em]">
-              {/* https://caniuse.com/mdn-svg_elements_use_omit_external_fragment */}
-              <use href="/favicon.svg#favicon" />
-            </svg>
-            libxslt-wasm-demo
-          </Link>
-        </div>
-      </header>
-      <main className="container flex max-w-4xl flex-col items-center gap-4 py-4">
-        {!isJspiEnabled && (
-          <Callout variant="destructive">
-            <CalloutText>
-              {
-                "JS Promise Integration (JSPI) is not enabled in this browser. See "
-              }
-              <Link
-                className="text-blue-500"
-                href="https://webassembly.org/features/"
-                isExternal
-              >
-                webassembly.org/features
-              </Link>
-              {" for more information on browser compatibility."}
-            </CalloutText>
-          </Callout>
-        )}
-        <p className="my-4">
-          {"This is a demo of "}
-          <Link
-            className="text-blue-500"
-            href="https://npmjs.com/package/libxslt-wasm"
-            isExternal
-          >
-            libxslt-wasm
-          </Link>
-          {` (v. ${semverMinVersion(__LIBXSLT_WASM_VERSION__)?.toString() ?? "0.0.0"}), a WebAssembly port of the `}
-          <Link
-            className="text-blue-500"
-            href="https://gitlab.gnome.org/GNOME/libxslt"
-            isExternal
-          >
-            libxslt
-          </Link>
-          {` library. Note that many URLs may not work as intended due to CORS
+      <Layout>
+        <main className="container flex max-w-4xl flex-col items-center gap-4 py-4">
+          {!isJspiEnabled && (
+            <Callout variant="destructive">
+              <CalloutText>
+                {
+                  "JS Promise Integration (JSPI) is not enabled in this browser. See "
+                }
+                <Link
+                  className="text-blue-500"
+                  href="https://webassembly.org/features/"
+                  isExternal
+                >
+                  webassembly.org/features
+                </Link>
+                {" for more information on browser compatibility."}
+              </CalloutText>
+            </Callout>
+          )}
+          <p className="my-4">
+            {"This is a demo of "}
+            <Link
+              className="text-blue-500"
+              href="https://npmjs.com/package/libxslt-wasm"
+              isExternal
+            >
+              libxslt-wasm
+            </Link>
+            {` (v. ${semverMinVersion(__LIBXSLT_WASM_VERSION__)?.toString() ?? "0.0.0"}), a WebAssembly port of the `}
+            <Link
+              className="text-blue-500"
+              href="https://gitlab.gnome.org/GNOME/libxslt"
+              isExternal
+            >
+              libxslt
+            </Link>
+            {` library. Note that many URLs may not work as intended due to CORS
           errors, as most XML documents either expect API requests to come from
           either a server or the same origin. You can try `}
-          <Link
-            className="text-blue-500"
-            href="https://google.github.io/styleguide/vimscriptguide.xml"
-            isExternal
-          >
-            https://google.github.io/styleguide/vimscriptguide.xml
-          </Link>
-          {" to see the demo in action."}
-        </p>
-        {isJspiEnabled ?
-          <Suspense fallback={<Skeleton className="h-[25.75rem] w-full" />}>
-            <LazyReader />
-          </Suspense>
-        : <div className="grid min-h-28 place-content-center rounded bg-muted p-4">
-            <p className="italic">
-              The demo is disabled since JSPI is not enabled.
-            </p>
-          </div>
-        }
-      </main>
-      <footer className="mt-4 grid place-content-center border-t">
-        <div className="container py-4">
-          <p>
-            {"Made with ❤️ by "}
             <Link
-              className="font-bold text-blue-500"
-              href="https://github.com/jeremy-code"
+              className="text-blue-500"
+              href="https://google.github.io/styleguide/vimscriptguide.xml"
+              isExternal
             >
-              Jeremy
+              https://google.github.io/styleguide/vimscriptguide.xml
             </Link>
+            {" to see the demo in action."}
           </p>
-        </div>
-      </footer>
+          {isJspiEnabled ?
+            <Suspense fallback={<Skeleton className="h-[25.75rem] w-full" />}>
+              <LazyReader />
+            </Suspense>
+          : <div className="grid min-h-28 place-content-center rounded bg-muted p-4">
+              <p className="italic">
+                The demo is disabled since JSPI is not enabled.
+              </p>
+            </div>
+          }
+        </main>
+      </Layout>
     </>
   );
 };

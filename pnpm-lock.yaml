@@ -40,6 +40,9 @@ importers:
       react-dropzone:
         specifier: ^14.3.8
         version: 14.3.8(react@19.1.0)
+      react-error-boundary:
+        specifier: ^6.0.0
+        version: 6.0.0(react@19.1.0)
       semver:
         specifier: ^7.7.2
         version: 7.7.2
@@ -145,6 +148,13 @@ packages:
       {
         integrity: sha512-K1A6z8tS3XsmCMM86xoWdn7Fkdn9m6RSVtocUrJYIwZnFVkng/PvkEoWtOWmP+Scc6saYWHWZYbndEEXxl24jw==,
       }
+
+  "@babel/runtime@7.27.4":
+    resolution:
+      {
+        integrity: sha512-t3yaEOuGu9NlIZ+hIeGbBjFtZT7j2cb2tg0fuaJKeGotchRjjLfrBA9Kwf8quhpP1EUuxModQg04q/mBwyg8uA==,
+      }
+    engines: { node: ">=6.9.0" }
 
   "@csstools/color-helpers@5.0.2":
     resolution:
@@ -4189,6 +4199,14 @@ packages:
     peerDependencies:
       react: ">= 16.8 || 18.0.0"
 
+  react-error-boundary@6.0.0:
+    resolution:
+      {
+        integrity: sha512-gdlJjD7NWr0IfkPlaREN2d9uUZUlksrfOx7SX62VRerwXbMY6ftGCIZua1VG1aXFNOimhISsTq+Owp725b9SiA==,
+      }
+    peerDependencies:
+      react: ">=16.13.1"
+
   react-is@16.13.1:
     resolution:
       {
@@ -4917,6 +4935,8 @@ snapshots:
       "@csstools/css-tokenizer": 3.0.4
       lru-cache: 10.4.3
     optional: true
+
+  "@babel/runtime@7.27.4": {}
 
   "@csstools/color-helpers@5.0.2":
     optional: true
@@ -7732,6 +7752,11 @@ snapshots:
       attr-accept: 2.2.5
       file-selector: 2.1.2
       prop-types: 15.8.1
+      react: 19.1.0
+
+  react-error-boundary@6.0.0(react@19.1.0):
+    dependencies:
+      "@babel/runtime": 7.27.4
       react: 19.1.0
 
   react-is@16.13.1: {}
