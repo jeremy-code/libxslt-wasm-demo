@@ -26,7 +26,8 @@
     "clsx": "^2.1.1",
     "hast-util-to-jsx-runtime": "^2.3.6",
     "libxslt-wasm": "^0.0.13",
-    "lucide-react": "^0.511.0",
+    "lucide-react": "^0.513.0",
+    "nanoid": "^5.1.5",
     "radix-ui": "^1.4.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -39,13 +40,13 @@
   },
   "devDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
-    "@eslint-react/eslint-plugin": "^1.50.0",
+    "@eslint-react/eslint-plugin": "^1.51.0",
     "@eslint/config-helpers": "^0.2.2",
     "@eslint/js": "^9.28.0",
     "@types/react": "^19.1.6",
-    "@types/react-dom": "^19.1.5",
+    "@types/react-dom": "^19.1.6",
     "@types/semver": "^7.7.0",
-    "@vitejs/plugin-react-swc": "^3.10.0",
+    "@vitejs/plugin-react-swc": "^3.10.1",
     "@vitest/eslint-plugin": "^1.2.1",
     "eslint": "^9.28.0",
     "eslint-import-resolver-typescript": "^4.4.2",
@@ -61,9 +62,9 @@
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.12",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.33.0",
+    "typescript-eslint": "^8.33.1",
     "vite": "^6.3.5",
-    "vitest": "^3.1.4"
+    "vitest": "^3.2.1"
   },
-  "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977"
+  "packageManager": "pnpm@10.11.1+sha512.e519b9f7639869dc8d5c3c5dfef73b3f091094b0a006d7317353c72b124e80e1afd429732e28705ad6bfa1ee879c1fce46c128ccebd3192101f43dd67c667912"
 }

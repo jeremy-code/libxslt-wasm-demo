@@ -3,12 +3,14 @@ import { create } from "zustand";
 
 import type { Nullable } from "#interfaces.ts";
 
-const useXmlDocumentStore = create<{
+export type XmlDocumentStore = {
   xmlDocument: Nullable<XmlDocument>;
   setXmlDocument: (xmlDocument: Nullable<XmlDocument>) => void;
-}>()((set) => ({
+};
+
+const useXmlDocumentStore = create<XmlDocumentStore>()((set) => ({
   xmlDocument: null,
-  setXmlDocument: (xmlDocument) => set((prev) => ({ ...prev, xmlDocument })),
+  setXmlDocument: (xmlDocument) => set(() => ({ xmlDocument })),
 }));
 
 export { useXmlDocumentStore };

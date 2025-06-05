@@ -37,6 +37,15 @@
     var(--color-gray-700),
     var(--color-gray-400)
   );
+  --color-destructive: light-dark(var(--color-red-500), var(--color-red-600));
+  --color-destructive-hover: light-dark(
+    var(--color-red-600),
+    var(--color-red-700)
+  );
+  --color-destructive-foreground: light-dark(
+    var(--color-red-100),
+    var(--color-red-50)
+  );
 }
 
 @layer base {

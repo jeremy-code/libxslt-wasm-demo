@@ -1,4 +1,5 @@
 import { memo, Suspense } from "react";
+import { jsxDEV } from "react/jsx-dev-runtime";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 
 import { toJsxRuntime, type Options } from "hast-util-to-jsx-runtime";
@@ -7,7 +8,7 @@ import type { PrimitivePropsWithRef } from "radix-ui/internal";
 
 import { useStarryNight, type Scope } from "#hooks/useStarryNight.tsx";
 
-const toJsxRuntimeOptions = { Fragment, jsx, jsxs } satisfies Options;
+const toJsxRuntimeOptions = { Fragment, jsx, jsxDEV, jsxs } satisfies Options;
 
 type CodeBlockItemProps = { value: string; scope: Scope };
 
@@ -17,15 +18,12 @@ const CodeBlockItemHelper = memo(function CodeBlockItemHelper({
 }: CodeBlockItemProps) {
   const starryNight = useStarryNight();
 
-  return (
-    <>
-      {toJsxRuntime(starryNight.highlight(value, scope), toJsxRuntimeOptions)}
-    </>
-  );
+  return toJsxRuntime(starryNight.highlight(value, scope), toJsxRuntimeOptions);
 });
 
 const CodeBlockItem = ({ value, scope }: CodeBlockItemProps) => {
   return (
+    // Suspend with the syntax value to prevent layout shift
     <Suspense fallback={value}>
       <CodeBlockItemHelper value={value} scope={scope} />
     </Suspense>
