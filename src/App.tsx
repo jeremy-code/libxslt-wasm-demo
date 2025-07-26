@@ -69,7 +69,7 @@ const App = () => {
             {" to see the demo in action."}
           </p>
           {isJspiEnabled ?
-            <Suspense fallback={<Skeleton className="h-[25.75rem] w-full" />}>
+            <Suspense fallback={<Skeleton className="h-[25.375rem] w-full" />}>
               <LazyReader />
             </Suspense>
           : <div className="grid min-h-28 place-content-center rounded bg-muted p-4">

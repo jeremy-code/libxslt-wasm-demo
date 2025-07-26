@@ -6,7 +6,7 @@ import { create } from "zustand";
 import { ToastAction, type ToastProps } from "../components/Toast.tsx";
 
 const TOAST_LIMIT = 5;
-const TOAST_REMOVE_DELAY = 1_000_000;
+const TOAST_REMOVE_DELAY = 10_000_000;
 
 type ToasterToast = ToastProps & {
   id: string;

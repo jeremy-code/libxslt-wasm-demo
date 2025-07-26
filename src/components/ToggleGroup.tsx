@@ -11,7 +11,7 @@ import { cn } from "#utils/cn.ts";
 
 const toggleVariants = cva(
   [
-    "grid place-content-center rounded-md text-sm font-medium transition-colors",
+    "grid place-content-center rounded-md text-sm font-medium transition",
     "disabled:cursor-not-allowed disabled:opacity-50",
   ],
   {
@@ -39,7 +39,8 @@ const ToggleGroup = ({
 }: ComponentPropsWithRef<typeof ToggleGroupPrimitive.Root>) => (
   <ToggleGroupPrimitive.Root
     className={cn(
-      "flex items-center justify-center gap-2 data-[orientation=horizontal]:flex-row data-[orientation=vertical]:flex-col",
+      "flex items-center justify-center gap-2",
+      "data-[orientation=horizontal]:flex-row data-[orientation=vertical]:flex-col",
       className,
     )}
     {...props}
