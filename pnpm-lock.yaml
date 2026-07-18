@@ -23,8 +23,8 @@ importers:
         specifier: ^2.3.6
         version: 2.3.6
       libxslt-wasm:
-        specifier: ^0.0.14
-        version: 0.0.14
+        specifier: ^0.0.17
+        version: 0.0.17
       lucide-react:
         specifier: ^0.539.0
         version: 0.539.0(react@19.1.1)
@@ -3629,10 +3629,10 @@ packages:
       }
     engines: { node: ">= 0.8.0" }
 
-  libxslt-wasm@0.0.14:
+  libxslt-wasm@0.0.17:
     resolution:
       {
-        integrity: sha512-WmwD9GVMH3Rpw/4e118jReSRudo1jbV2F60ixJR2AQepo6nAq9k1/VRwaXYWjlNsd5wgOZhLwXHJOPEg4U6SsA==,
+        integrity: sha512-jIs3NNGAwdXl02XoCHplMgoGuDPbXtYpU3wiedxETcGLhmga0d8deug4Lrgnx4SszjmtO4nXjIy/H6lgjxn9eA==,
       }
     engines: { node: ">=19.2.0" }
 
@@ -4889,6 +4889,7 @@ packages:
         integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==,
       }
     engines: { node: ">=18" }
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-mimetype@3.0.0:
     resolution:
@@ -7409,7 +7410,7 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
-  libxslt-wasm@0.0.14: {}
+  libxslt-wasm@0.0.17: {}
 
   lightningcss-darwin-arm64@1.30.1:
     optional: true
